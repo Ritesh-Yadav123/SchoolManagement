@@ -1,4 +1,65 @@
 body{
-    background-color: rgba(67, 37, 27, 0.449);
-    color: red;
+    background-color: black;
+    color: white;
+}
+
+#i1{
+    position: relative;
+    top: 34px;
+}
+#i2{
+    position: relative;
+    top: 12px;
+}
+img{
+    display: block;
+    margin: 20px auto;
+}
+#poweredText{
+    text-align: center;
+    padding-top: 80px;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+/* ADMIN LOGIN */
+
+#admin{
+    color: aqua;
+    text-align: center;
+}
+#adminform{
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(213, 13, 13, 0.1);
+}
+
+#adminform>*{
+    padding: 18px;
+    margin: 5px;
+    box-shadow: 2px 2px 5px green;
+    border-radius: 12px;
+}
+button[type=submit]{
+    background-color: green;
+}
+
+#c1 {
+    position: relative;
+    left: -517px;
+    top: -104px;
+}
+
+body{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#adminMain{
+    position: absolute;
+    left: 0px;
+    right: 0px;
 }
