@@ -19,9 +19,16 @@
       }
       @media screen and (max-width: 400px) {
         #aIcon {
-    left: 12px;
-    right: auto; 
+          left: 12px;
+          right: auto;
         }
+      }
+      .error {
+        color: red;
+        display: none;
+        text-align: center;
+        margin-top: 10px;
+        font-size: 14px;
       }
     </style>
   </head>
@@ -30,11 +37,45 @@
       <img id="i2" src="./images/login 2.png" />
       <h2 id="admin">ADMIN LOGIN</h2>
       <form id="adminform">
-        <input type="text" placeholder="enter your email/user" />
-        <input type="password" placeholder="enter password" />
+        <input type="text" id="email" placeholder="enter your email/user" required />
+        <input type="password" id="password" placeholder="enter password" required />
+        <p id="error" class="error"></p>
         <button type="submit">Login TO SMS</button>
       </form>
     </div>
     <img id="aIcon" src="./images/attendance 1.png" />
+    <script>
+      document.getElementById('adminform').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorElement = document.getElementById('error');
+        console.log('Form submitted:', { email, password });
+
+        try {
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+
+          console.log('Response:', response.status, response.redirected);
+
+          if (response.redirected) {
+            console.log('Redirecting to:', response.url);
+            window.location.href = response.url;
+          } else {
+            const data = await response.json();
+            console.log('Error data:', data);
+            errorElement.textContent = data.message;
+            errorElement.style.display = 'block';
+          }
+        } catch (err) {
+          console.error('Fetch error:', err);
+          errorElement.textContent = 'Network error. Please try again.';
+          errorElement.style.display = 'block';
+        }
+      });
+    </script>
   </body>
 </html>
