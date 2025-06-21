@@ -1,50 +1,109 @@
-const express = require('express');
-const path = require('path');
-const db = require('./db');
+const express = require("express");
+const path = require("path");
+const db = require("./db");
+const studentRoutes = require("./student");
 
+const session = require("express-session");
 const app = express();
+
+app.use(session({
+  secret: 'yourSecretKey',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
 
 app.use(express.json());
 
-const pathname = path.join(__dirname, 'public');
+const pathname = path.join(__dirname, "public");
 app.use(express.static(pathname));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(pathname, 'index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(pathname, "index.html"));
 });
 
-app.get('/admin', (req, res) => {
-  res.sendFile(path.join(pathname, 'adminLogin.html'));
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(pathname, "adminLogin.html"));
 });
 
-app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(pathname, 'classes.html'));
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(pathname, "classes.html"));
 });
 
-app.post('/login', (req, res) => {
+// app.post("/login", (req, res, next) => {
+//   const { email, password } = req.body;
+
+//   if (!email || !password) {
+//     return res
+//       .status(400)
+//       .json({ success: false, message: "Email and password are required" });
+//   }
+
+//   const sanitizedEmail = String(email).trim();
+//   const sanitizedPassword = String(password).trim();
+
+//   const query =
+//     "SELECT * FROM admin WHERE (email = ? OR user = ?) AND password = ?";
+//   db.query(
+//     query,
+//     [sanitizedEmail, sanitizedEmail, sanitizedPassword],
+//     (err, results) => {
+//       if (err) {
+//         console.error("Database query error:", err);
+//         return res
+//           .status(500)
+//           .json({ success: false, message: "Internal server error" });
+//       }
+
+//       if (results.length > 0) {
+//         res.redirect("/dashboard?message=Login%20successful");
+//       } else {
+//         res
+//           .status(401)
+//           .json({ success: false, message: "Invalid email or password" });
+//       }
+//     }
+//   );
+// });
+
+
+
+app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ success: false, message: 'Email and password are required' });
+    return res.status(400).json({ success: false, message: "Email and password are required" });
   }
 
-  const sanitizedEmail = String(email).trim();
-  const sanitizedPassword = String(password).trim();
-
-  const query = 'SELECT * FROM admin WHERE (email = ? OR user = ?) AND password = ?';
-  db.query(query, [sanitizedEmail, sanitizedEmail, sanitizedPassword], (err, results) => {
-    if (err) {
-      console.error('Database query error:', err);
-      return res.status(500).json({ success: false, message: 'Internal server error' });
-    }
+  const query = "SELECT * FROM admin WHERE (email = ? OR user = ?) AND password = ?";
+  db.query(query, [email.trim(), email.trim(), password.trim()], (err, results) => {
+    if (err) return res.status(500).json({ success: false, message: "Internal server error" });
 
     if (results.length > 0) {
-      res.redirect('/dashboard?message=Login%20successful');
+      req.session.isLoggedIn = true;
+      res.redirect("/dashboard");
     } else {
-      res.status(401).json({ success: false, message: 'Invalid email or password' });
+      res.status(401).json({ success: false, message: "Invalid email or password" });
     }
   });
 });
+
+// Other requires and middleware above...
+
+
+// 🔐 Auth middleware
+function isAuthenticated(req, res, next) {
+  if (req.session.isLoggedIn) {
+    return next();
+  }
+  return res.status(401).send("Unauthorized");
+}
+
+// 👇 Protect /student routes
+app.use("/student", isAuthenticated, studentRoutes);
+
+
 
 const PORT = 5000;
 app.listen(PORT, () => {

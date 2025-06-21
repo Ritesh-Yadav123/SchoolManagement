@@ -133,8 +133,11 @@
         </div>
         <input type="submit" value="SUBMIT" />
       </form>
-      <button id="back">GO BACK</button>
+      <button id="back" onclick="goback()">GO BACK</button>
     </div>
     <img id="aIcon" src="./images/attendance 1.png" />
+    <script>
+      let goback=()=>window.history.back();
+    </script>
   </body>
 </html>

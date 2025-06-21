@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Splash Screen</title>
     <link rel="stylesheet" href="./styling/style.css">
+
+    <style>
+           body {
+      transition: opacity 1s ease;
+      opacity: 1;
+    }
+    body.fade-out {
+      opacity: 0;
+    }
+    </style>
 </head>
 <body>
     <div id="main">
@@ -17,6 +27,13 @@
         setTimeout(()=>{
             document.getElementById('poweredText').style.opacity=1;
         },2000)
+
+        setTimeout(()=>{
+            document.body.classList.add('fade-out');
+            setTimeout(()=>{
+                window.location.href="/admin";
+            },2000)
+        },4000);
     </script>
 </body>
 </html>
