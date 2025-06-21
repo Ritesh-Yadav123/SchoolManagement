@@ -5,11 +5,12 @@ const router=express.Router();
 
 router.use(express.json());
 
-const pathname = path.join(__dirname, "public");
-// router.use(express.static(pathname));
-
 router.get("/",(req,res)=>{
-    res.send("I am from student.js");
+    const studentData = {
+        class: req.query.class,
+        section: req.query.section
+    };
+    res.render("work.ejs", {studentData});
 })
 
 

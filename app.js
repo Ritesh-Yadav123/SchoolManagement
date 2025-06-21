@@ -2,9 +2,13 @@ const express = require("express");
 const path = require("path");
 const db = require("./db");
 const studentRoutes = require("./student");
+const app = express();
+
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 const session = require("express-session");
-const app = express();
 
 app.use(session({
   secret: 'yourSecretKey',
@@ -91,7 +95,6 @@ app.post("/login", (req, res) => {
 
 // Other requires and middleware above...
 
-
 // 🔐 Auth middleware
 function isAuthenticated(req, res, next) {
   if (req.session.isLoggedIn) {
@@ -102,7 +105,6 @@ function isAuthenticated(req, res, next) {
 
 // 👇 Protect /student routes
 app.use("/student", isAuthenticated, studentRoutes);
-
 
 
 const PORT = 5000;
