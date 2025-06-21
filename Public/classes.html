@@ -121,7 +121,7 @@
       <h2 id="admin">Select Class And Section</h2>
       <form id="classAndSection">
         <div class="form-group">
-          <select id="class" name="class" aria-label="Select Class">
+          <select id="classSelect" name="class" aria-label="Select Class">
             <option value="1">1</option>
             <option value="2">2</option>
           </select>
@@ -136,8 +136,20 @@
       <button id="back" onclick="goback()">GO BACK</button>
     </div>
     <img id="aIcon" src="./images/attendance 1.png" />
-    <script>
-      let goback=()=>window.history.back();
-    </script>
+
+<script>
+  document.getElementById("classAndSection").addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent actual form submission
+    
+    const selectedClass = document.getElementById("classSelect").value;
+    const selectedSection = document.getElementById("section").value;
+    
+    // Redirect with query params
+    window.location.href = `http://localhost:5000/student?class=${selectedClass}&section=${selectedSection}`;
+  });
+
+  let goback=()=>window.history.back();
+</script>
+
   </body>
 </html>
