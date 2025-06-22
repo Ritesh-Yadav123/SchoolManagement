@@ -44,6 +44,7 @@
       </form>
     </div>
     <img id="aIcon" src="./images/attendance 1.png" />
+    <div id="timing" style="color: red;"></div>
     <script>
       document.getElementById('adminform').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -76,6 +77,13 @@
           errorElement.style.display = 'block';
         }
       });
+    </script>
+    <script>
+      function time(){
+        const d=new Date();
+        document.getElementById('timing').innerHTML=d.toLocaleTimeString('en-GB', { hour12: false });
+      }
+      setInterval(time,1000);
     </script>
   </body>
 </html>
