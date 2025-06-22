@@ -1,27 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>work</title>
-    <style>
-   body {
-  height: 100vh;
-  margin: 0;
-  background: linear-gradient(
-    to bottom,
-    #1d9bb1 0%,
-    #1b6ca8 25%,
-    #224c7b 50%,
-    #2b3a5a 75%,
-    #1e2525 100%
-  );
-  font-family: sans-serif;
-}
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Work Panel</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1d2b64, #f8cdda);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 24px;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .dropdown-container {
+      position: relative;
+    }
+
+    #work {
+      padding: 14px 20px;
+      font-size: 16px;
+      border-radius: 14px;
+      border: none;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      min-width: 280px;
+      appearance: none;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    #work:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    #work:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(240, 150, 255, 0.6);
+    }
+
+    .dropdown-container::after {
+      content: "▼";
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #555;
+      pointer-events: none;
+      font-size: 14px;
+    }
+
+    option {
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Class: <%= studentData.class %> | Section: <%= studentData.section %></h1>
-    <h2> I AM FROM EJS</h2>
+
+  <h1>Class: <%= studentData.class %> | Section: <%= studentData.section %></h1>
+
+  <div class="dropdown-container">
+    <select name="work" id="work">
+      <option>Admission</option>
+      <option>Notice</option>
+      <option>Students</option>
+      <option>Fee Management</option>
+      <option>Marksheet</option>
+      <option>ClassRoutine</option>
+    </select>
+  </div>
+
 </body>
 </html>
