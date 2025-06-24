@@ -69,9 +69,24 @@
     option {
       padding: 10px;
     }
+
+    #highlight {
+      color: green;
+      font-size: 34px;
+      font-weight: bolder;
+      margin-top: 0;
+      position: absolute;
+      top: 18px;
+      text-shadow: 2px 2px black;
+      transition: 2s;
+    }
   </style>
 </head>
 <body>
+<div id="highlight">
+  Welcome To School Management System
+  <h6 id="dev" style="color: red; text-align: center;">developed by RITTUtech</h6>
+</div>
 
   <h1>Class: <%= studentData.class %> | Section: <%= studentData.section %></h1>
 
@@ -85,6 +100,15 @@
       <option>ClassRoutine</option>
     </select>
   </div>
+<script>
+  const element=document.getElementById('highlight');
+  element.style.opacity=0;
+  setInterval(()=>{
+    element.style.opacity=1;
+    document.getElementById('dev').style.opacity=0;
+    setInterval(()=>{document.getElementById('dev').style.opacity=1},2000);
+  },2000);
 
+</script>
 </body>
 </html>
