@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admission In SMS</title>
+    <link rel="stylesheet" href="./styling/admission.css">
 </head>
 <body>
     <h1 id="heading"> Admission </h1>
@@ -38,9 +39,12 @@
     <script>
         const warning=document.getElementById('warning');
         setInterval(()=>{
-            warning.innerHTML="Fill The Data Carefully......";
+            warning.textContent="Fill The Data Carefully......";
+            warning.style.visibility = 'visible';
+        warning.style.opacity = '1';
             setTimeout(()=>{
-            warning.innerHTML="";
+            warning.style.visibility = 'none';
+        warning.style.opacity = '0';
             },2000);
         },4000);
     </script>

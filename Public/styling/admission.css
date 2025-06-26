@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+  margin: auto;
+  width: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  overflow-y: auto;
+
+  display: flex;               /* ✅ NEW */
+  flex-direction: column;      /* ✅ NEW */
+
+  background: linear-gradient(
+    135deg,
+    #ff6ec4,
+    #7873f5,
+    #42e695,
+    #3bb2b8,
+    #ffb75e
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+  color: #ffffff;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+#warning {
+  height: 25px; /* Reserve space */
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  visibility: hidden; /* Keeps space, hides text */
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#admission {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px); /*important */
+  width: 350px;
+  color: white;
+}
+
+#heading {
+  text-align: center;
+}
+
+
+input[type="text"],input[type="date"],input[type="tel"],select {
+width: 100%;
+  padding: 10px 15px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: black;
+  font-size: 16px;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+input[type="submit"]{
+    position: absolute;
+    bottom: 40px;
+    left: 0px;
+}
+
+@media screen and (min-width:480px) {
+    body {
+        overflow-y: auto;
+    }
+}
