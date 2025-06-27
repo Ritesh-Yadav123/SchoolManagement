@@ -1,53 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admission In SMS</title>
-    <link rel="stylesheet" href="./styling/admission.css">
-</head>
-<body>
-    <h1 id="heading"> Admission </h1>
+    <link rel="stylesheet" href="./styling/admission.css" />
+  </head>
+
+  <body>
+    <h1 id="heading">Admission</h1>
     <div id="warning"></div>
 
-    <form id="admission">
-        Student Name : 
-        <input type="text" name="full_name" required><br>
-        Gender :
-        Male : <input type="radio" name="gender" value="Male">
-        Female : <input type="radio" name="gender" value="Female">
-        Other : <input type="radio" name="gender" value="Other">
-        <br>
-        Date Of Birth : <input type="date" name="date_of_birth">
-        <br>
-        Class :<select name="class" required>
-            <option value="">--Select Class--</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>            
-        </select>
-            Section :
-            <select name="section">
-            <option value="">--Select Section--</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-        </select>
-        <br>
-        Phone Number :     <input type="tel" name="contact_number" pattern="[0-9]{10}" maxlength="10"><br><br>
-        <input type="submit">
+    <form id="admission" name="admissionForm">
+      Student Name :
+      <input type="text" name="full_name" required /><br />
+      Gender : Male : <input type="radio" name="gender" value="Male" /> Female :
+      <input type="radio" name="gender" value="Female" /> Other :
+      <input type="radio" name="gender" value="Other" />
+      <br />
+      Date Of Birth : <input type="date" name="date_of_birth" />
+      <br />
+      Class :<select name="class" required>
+        <option value="">--Select Class--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      Section :
+      <select name="section">
+        <option value="">--Select Section--</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+      </select>
+      <br />
+      Phone Number :
+      <input
+        type="tel"
+        name="contact_number"
+        pattern="[0-9]{10}"
+        maxlength="10"
+      /><br /><br />
+      <input type="submit" onclick="hello(event)" />
     </form>
+
+    <div id="formSubmited"></div>
     <script>
-        const warning=document.getElementById('warning');
-        setInterval(()=>{
-            warning.textContent="Fill The Data Carefully......";
-            warning.style.visibility = 'visible';
-        warning.style.opacity = '1';
-            setTimeout(()=>{
-            warning.style.visibility = 'none';
-        warning.style.opacity = '0';
-            },2000);
-        },4000);
+      const warning = document.getElementById("warning");
+      setInterval(() => {
+        warning.textContent = "Fill The Data Carefully......";
+        warning.style.visibility = "visible";
+        warning.style.opacity = "1";
+        setTimeout(() => {
+          warning.style.visibility = "hidden";
+          warning.style.opacity = "0";
+        }, 2000);
+      }, 4000);
     </script>
-    
-</body>
+   <script>
+  let formData = {};
+
+  function hello(event) {
+    event.preventDefault();
+    document.getElementById("admission").style.display = "none";
+    document.getElementById("warning").style.display = "none";
+
+    const x = document.forms["admissionForm"];
+
+    const name = x["full_name"].value;
+
+    let gender = "";
+    for (let radio of x["gender"]) {
+      if (radio.checked) {
+        gender = radio.value;
+        break;
+      }
+    }
+
+    const dob = x["date_of_birth"].value;
+    const classValue = x["class"].value;
+    const section = x["section"].value;
+    const phone = x["contact_number"].value;
+
+    formData = { name, gender, dob, classValue, section, phone };
+
+    const result = `
+      <h1>SUBMITTED FORM INFO</h1>
+      <p><strong>Student Name:</strong> ${name}</p>
+      <p><strong>Gender:</strong> ${gender}</p>
+      <p><strong>Date of Birth:</strong> ${dob}</p>
+      <p><strong>Class:</strong> ${classValue}</p>
+      <p><strong>Section:</strong> ${section}</p>
+      <p><strong>Phone Number:</strong> ${phone}</p>
+      <button id="success">Everything is Fine</button>
+      <button id="error" onclick="editForm()">Edit The Details</button>
+    `;
+    document.getElementById("formSubmited").innerHTML = result;
+  }
+
+  function editForm() {
+  document.getElementById("formSubmited").style.display = "none";
+  document.getElementById("admission").style.display = "block";
+  document.getElementById("warning").style.display = "block";
+  }
+</script>
+
+  </body>
 </html>
