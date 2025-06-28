@@ -56,8 +56,9 @@
         }, 2000);
       }, 4000);
     </script>
+    
    <script>
-  let formData = {};
+  // let formData = {};
 
   function hello(event) {
     event.preventDefault();
@@ -81,7 +82,7 @@
     const section = x["section"].value;
     const phone = x["contact_number"].value;
 
-    formData = { name, gender, dob, classValue, section, phone };
+    // formData = { name, gender, dob, classValue, section, phone };
 
     const result = `
       <h1>SUBMITTED FORM INFO</h1>
@@ -98,10 +99,12 @@
   }
 
   function editForm() {
+    
   document.getElementById("formSubmited").style.display = "none";
   document.getElementById("admission").style.display = "block";
   document.getElementById("warning").style.display = "block";
   }
+
 </script>
 
   </body>

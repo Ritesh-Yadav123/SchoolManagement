@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const db = require("./db");
 const studentRoutes = require("./student");
+const admissionRoutes=require("./admission");
 const app = express();
 
 
@@ -34,6 +35,14 @@ app.get("/admin", (req, res) => {
 app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(pathname, "classes.html"));
 });
+
+
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(pathname, "classes.html"));
+});
+
+
+
 
 // app.post("/login", (req, res, next) => {
 //   const { email, password } = req.body;
@@ -100,11 +109,15 @@ function isAuthenticated(req, res, next) {
   if (req.session.isLoggedIn) {
     return next();
   }
-  return res.status(401).send("Unauthorized");
+  return res.status(401).send("Unauthorized access Ask Ritesh For clearification");
 }
 
 // 👇 Protect /student routes
 app.use("/student", isAuthenticated, studentRoutes);
+
+app.use("/admission", isAuthenticated, admissionRoutes);
+
+
 
 
 const PORT = 5000;
