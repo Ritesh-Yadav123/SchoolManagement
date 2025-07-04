@@ -11,7 +11,8 @@
     <h1 id="heading">Admission</h1>
     <div id="warning"></div>
 
-    <form id="admission" name="admissionForm">
+    <form action="/admission" method="POST" id="admission" name="admissionForm">
+
       Student Name :
       <input type="text" name="full_name" required /><br />
       Gender : Male : <input type="radio" name="gender" value="Male" /> Female :
@@ -45,7 +46,7 @@
 
     <div id="formSubmited"></div>
 
-    <script>
+    <!-- <script>
       let tempFormData = null; // Temporary storage for form data
 
       // Warning message animation
@@ -114,7 +115,7 @@
           <p><strong>Class:</strong> ${tempFormData.classValue}</p>
           <p><strong>Section:</strong> ${tempFormData.section}</p>
           <p><strong>Phone Number:</strong> ${tempFormData.phone}</p>
-          <button id="success">Everything is Fine</button>
+          <button id="success" type="submit">Everything is Fine</button>
           <button id="error">I want to fill the Data Again</button>
         `;
       }
@@ -140,6 +141,124 @@
           alert("No data to submit!");
         }
       }
-    </script>
+    </script> -->
+ 
+  
+  <script>
+  let tempFormData = null; // Temporary storage for form data
+
+  // Warning message animation
+  const warning = document.getElementById("warning");
+  setInterval(() => {
+    warning.textContent = "Fill The Data Carefully......";
+    warning.style.visibility = "visible";
+    warning.style.opacity = "1";
+    setTimeout(() => {
+      warning.style.visibility = "hidden";
+      warning.style.opacity = "0";
+    }, 2000);
+  }, 4000);
+
+  // Form submission handler
+  document.getElementById("admission").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent page reload
+    verifyForm(); // Call verification
+  });
+
+  // Event delegation for dynamically created buttons
+  document.getElementById("formSubmited").addEventListener("click", function (event) {
+    if (event.target.id === "success") {
+      submitForm();
+    } else if (event.target.id === "error") {
+      editForm();
+    }
+  });
+
+  function verifyForm() {
+    const x = document.forms["admissionForm"];
+
+    // Validate required fields
+    if (!x["full_name"].value || !x["class"].value) {
+      alert("Please fill all required fields (Student Name and Class)!");
+      return;
+    }
+
+    // Store form data temporarily with server-compatible keys
+    tempFormData = {
+      full_name: x["full_name"].value,
+      gender: "",
+      date_of_birth: x["date_of_birth"].value || null, // Use null for database
+      class: x["class"].value,
+      section: x["section"].value || null,
+      contact_number: x["contact_number"].value || null,
+    };
+    for (let radio of x["gender"]) {
+      if (radio.checked) {
+        tempFormData.gender = radio.value || null;
+        break;
+      }
+    }
+
+    // Toggle visibility
+    document.getElementById("admission").style.display = "none";
+    document.getElementById("warning").style.display = "none";
+    document.getElementById("formSubmited").style.display = "block";
+
+    // Display temporary data
+    document.getElementById("formSubmited").innerHTML = `
+      <h1>SUBMITTED FORM INFO</h1>
+      <p><strong>Student Name:</strong> ${tempFormData.full_name}</p>
+      <p><strong>Gender:</strong> ${tempFormData.gender || "Not selected"}</p>
+      <p><strong>Date of Birth:</strong> ${tempFormData.date_of_birth || "Not provided"}</p>
+      <p><strong>Class:</strong> ${tempFormData.class}</p>
+      <p><strong>Section:</strong> ${tempFormData.section || "Not provided"}</p>
+      <p><strong>Phone Number:</strong> ${tempFormData.contact_number || "Not provided"}</p>
+      <button id="success" type="button">Everything is Fine</button>
+      <button id="error" type="button">I want to fill the Data Again</button>
+    `;
+  }
+
+  function editForm() {
+    tempFormData = null; // Clear temporary data
+    document.getElementById("formSubmited").style.display = "none";
+    document.getElementById("admission").style.display = "block";
+    document.getElementById("warning").style.display = "block";
+    document.forms["admissionForm"].reset(); // Reset form fields
+  }
+
+  function submitForm() {
+    if (tempFormData) {
+      // Send POST request to /admission
+      fetch('/admission', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tempFormData),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(data => {
+          alert(data); // Show server response (e.g., "Admission Taken")
+          tempFormData = null; // Clear temporary data
+          document.getElementById("formSubmited").style.display = "none";
+          document.getElementById("admission").style.display = "block";
+          document.getElementById("warning").style.display = "block";
+          document.forms["admissionForm"].reset(); // Reset form
+        })
+        .catch(error => {
+          console.error('Error submitting form:', error);
+          alert('Failed to submit form: ' + error.message);
+        });
+    } else {
+      alert("No data to submit!");
+    }
+  }
+</script>
+
   </body>
 </html>
