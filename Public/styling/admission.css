@@ -157,3 +157,43 @@ input[type="submit"]{
   background-color: #c82333;
   transform: scale(1.03);
 }
+
+
+#verifyButton {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #4caf50; /* Green background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Hover effect: scale up and change background */
+#verifyButton:hover {
+  transform: scale(1.05); /* Slight scale up */
+  background-color: #45a049; /* Darker green */
+}
+
+/* Focus effect: add glow for accessibility */
+#verifyButton:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.8); /* Green glow */
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03); /* Subtle pulse */
+  }
+  100% {
+    transform: scale(1);
+  }
+}

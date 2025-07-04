@@ -40,11 +40,15 @@
         pattern="[0-9]{10}"
         maxlength="10"
       /><br /><br />
-      <input type="submit" onclick="hello(event)" />
+      <button id="verifyButton" type="submit" form="admission">Verify The Details Entered</button>
     </form>
 
     <div id="formSubmited"></div>
+
     <script>
+      let tempFormData = null; // Temporary storage for form data
+
+      // Warning message animation
       const warning = document.getElementById("warning");
       setInterval(() => {
         warning.textContent = "Fill The Data Carefully......";
@@ -55,57 +59,87 @@
           warning.style.opacity = "0";
         }, 2000);
       }, 4000);
-    </script>
-    
-   <script>
-  // let formData = {};
 
-  function hello(event) {
-    event.preventDefault();
-    document.getElementById("admission").style.display = "none";
-    document.getElementById("warning").style.display = "none";
+      // Form submission handler
+      document.getElementById("admission").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent page reload
+        verifyForm(); // Call verification
+      });
 
-    const x = document.forms["admissionForm"];
+      // Event delegation for dynamically created buttons
+      document.getElementById("formSubmited").addEventListener("click", function (event) {
+        if (event.target.id === "success") {
+          submitForm();
+        } else if (event.target.id === "error") {
+          editForm();
+        }
+      });
 
-    const name = x["full_name"].value;
+      function verifyForm() {
+        const x = document.forms["admissionForm"];
 
-    let gender = "";
-    for (let radio of x["gender"]) {
-      if (radio.checked) {
-        gender = radio.value;
-        break;
+        // Validate required fields
+        if (!x["full_name"].value || !x["class"].value) {
+          alert("Please fill all required fields (Student Name and Class)!");
+          return;
+        }
+
+        // Store form data temporarily
+        tempFormData = {
+          name: x["full_name"].value,
+          gender: "",
+          dob: x["date_of_birth"].value || "Not provided",
+          classValue: x["class"].value,
+          section: x["section"].value || "Not provided",
+          phone: x["contact_number"].value || "Not provided",
+        };
+        for (let radio of x["gender"]) {
+          if (radio.checked) {
+            tempFormData.gender = radio.value || "Not selected";
+            break;
+          }
+        }
+
+        // Toggle visibility
+        document.getElementById("admission").style.display = "none";
+        document.getElementById("warning").style.display = "none";
+        document.getElementById("formSubmited").style.display = "block";
+
+        // Display temporary data
+        document.getElementById("formSubmited").innerHTML = `
+          <h1>SUBMITTED FORM INFO</h1>
+          <p><strong>Student Name:</strong> ${tempFormData.name}</p>
+          <p><strong>Gender:</strong> ${tempFormData.gender}</p>
+          <p><strong>Date of Birth:</strong> ${tempFormData.dob}</p>
+          <p><strong>Class:</strong> ${tempFormData.classValue}</p>
+          <p><strong>Section:</strong> ${tempFormData.section}</p>
+          <p><strong>Phone Number:</strong> ${tempFormData.phone}</p>
+          <button id="success">Everything is Fine</button>
+          <button id="error">I want to fill the Data Again</button>
+        `;
       }
-    }
 
-    const dob = x["date_of_birth"].value;
-    const classValue = x["class"].value;
-    const section = x["section"].value;
-    const phone = x["contact_number"].value;
+      function editForm() {
+        tempFormData = null; // Clear temporary data
+        document.getElementById("formSubmited").style.display = "none";
+        document.getElementById("admission").style.display = "block";
+        document.getElementById("warning").style.display = "block";
+        document.forms["admissionForm"].reset(); // Reset form fields
+      }
 
-    // formData = { name, gender, dob, classValue, section, phone };
-
-    const result = `
-      <h1>SUBMITTED FORM INFO</h1>
-      <p><strong>Student Name:</strong> ${name}</p>
-      <p><strong>Gender:</strong> ${gender}</p>
-      <p><strong>Date of Birth:</strong> ${dob}</p>
-      <p><strong>Class:</strong> ${classValue}</p>
-      <p><strong>Section:</strong> ${section}</p>
-      <p><strong>Phone Number:</strong> ${phone}</p>
-      <button id="success">Everything is Fine</button>
-      <button id="error" onclick="editForm()">Edit The Details</button>
-    `;
-    document.getElementById("formSubmited").innerHTML = result;
-  }
-
-  function editForm() {
-    
-  document.getElementById("formSubmited").style.display = "none";
-  document.getElementById("admission").style.display = "block";
-  document.getElementById("warning").style.display = "block";
-  }
-
-</script>
-
+      function submitForm() {
+        if (tempFormData) {
+          console.log("Final Submission:", tempFormData); // Simulate submission
+          alert("Form submitted successfully!");
+          tempFormData = null; // Clear temporary data
+          document.getElementById("formSubmited").style.display = "none";
+          document.getElementById("admission").style.display = "block";
+          document.getElementById("warning").style.display = "block";
+          document.forms["admissionForm"].reset(); // Reset form
+        } else {
+          alert("No data to submit!");
+        }
+      }
+    </script>
   </body>
 </html>
