@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admission In SMS</title>
-    <link rel="stylesheet" href="./styling/admission.css" />
+    <link rel="stylesheet" href="styling/admission.css" />
   </head>
 
   <body>
@@ -25,7 +25,7 @@
         <option value="">--Select Class--</option>
         <option value="1">1</option>
         <option value="2">2</option>
-        <option value="3">3</option>
+        <!-- <option value="3">3</option> -->
       </select>
       Section :
       <select name="section">
@@ -45,103 +45,6 @@
     </form>
 
     <div id="formSubmited"></div>
-
-    <!-- <script>
-      let tempFormData = null; // Temporary storage for form data
-
-      // Warning message animation
-      const warning = document.getElementById("warning");
-      setInterval(() => {
-        warning.textContent = "Fill The Data Carefully......";
-        warning.style.visibility = "visible";
-        warning.style.opacity = "1";
-        setTimeout(() => {
-          warning.style.visibility = "hidden";
-          warning.style.opacity = "0";
-        }, 2000);
-      }, 4000);
-
-      // Form submission handler
-      document.getElementById("admission").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent page reload
-        verifyForm(); // Call verification
-      });
-
-      // Event delegation for dynamically created buttons
-      document.getElementById("formSubmited").addEventListener("click", function (event) {
-        if (event.target.id === "success") {
-          submitForm();
-        } else if (event.target.id === "error") {
-          editForm();
-        }
-      });
-
-      function verifyForm() {
-        const x = document.forms["admissionForm"];
-
-        // Validate required fields
-        if (!x["full_name"].value || !x["class"].value) {
-          alert("Please fill all required fields (Student Name and Class)!");
-          return;
-        }
-
-        // Store form data temporarily
-        tempFormData = {
-          name: x["full_name"].value,
-          gender: "",
-          dob: x["date_of_birth"].value || "Not provided",
-          classValue: x["class"].value,
-          section: x["section"].value || "Not provided",
-          phone: x["contact_number"].value || "Not provided",
-        };
-        for (let radio of x["gender"]) {
-          if (radio.checked) {
-            tempFormData.gender = radio.value || "Not selected";
-            break;
-          }
-        }
-
-        // Toggle visibility
-        document.getElementById("admission").style.display = "none";
-        document.getElementById("warning").style.display = "none";
-        document.getElementById("formSubmited").style.display = "block";
-
-        // Display temporary data
-        document.getElementById("formSubmited").innerHTML = `
-          <h1>SUBMITTED FORM INFO</h1>
-          <p><strong>Student Name:</strong> ${tempFormData.name}</p>
-          <p><strong>Gender:</strong> ${tempFormData.gender}</p>
-          <p><strong>Date of Birth:</strong> ${tempFormData.dob}</p>
-          <p><strong>Class:</strong> ${tempFormData.classValue}</p>
-          <p><strong>Section:</strong> ${tempFormData.section}</p>
-          <p><strong>Phone Number:</strong> ${tempFormData.phone}</p>
-          <button id="success" type="submit">Everything is Fine</button>
-          <button id="error">I want to fill the Data Again</button>
-        `;
-      }
-
-      function editForm() {
-        tempFormData = null; // Clear temporary data
-        document.getElementById("formSubmited").style.display = "none";
-        document.getElementById("admission").style.display = "block";
-        document.getElementById("warning").style.display = "block";
-        document.forms["admissionForm"].reset(); // Reset form fields
-      }
-
-      function submitForm() {
-        if (tempFormData) {
-          console.log("Final Submission:", tempFormData); // Simulate submission
-          alert("Form submitted successfully!");
-          tempFormData = null; // Clear temporary data
-          document.getElementById("formSubmited").style.display = "none";
-          document.getElementById("admission").style.display = "block";
-          document.getElementById("warning").style.display = "block";
-          document.forms["admissionForm"].reset(); // Reset form
-        } else {
-          alert("No data to submit!");
-        }
-      }
-    </script> -->
  
   
   <script>
@@ -218,46 +121,108 @@
     `;
   }
 
-  function editForm() {
-    tempFormData = null; // Clear temporary data
-    document.getElementById("formSubmited").style.display = "none";
-    document.getElementById("admission").style.display = "block";
-    document.getElementById("warning").style.display = "block";
-    document.forms["admissionForm"].reset(); // Reset form fields
-  }
+  // function editForm() {
+  //   tempFormData = null; // Clear temporary data
+  //   document.getElementById("formSubmited").style.display = "none";
+  //   document.getElementById("admission").style.display = "block";
+  //   document.getElementById("warning").style.display = "block";
+  //   document.forms["admissionForm"].reset(); // Reset form fields
+  // }
 
-  function submitForm() {
-    if (tempFormData) {
-      // Send POST request to /admission
-      fetch('/admission', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(tempFormData),
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.text();
-        })
-        .then(data => {
-          alert(data); // Show server response (e.g., "Admission Taken")
-          tempFormData = null; // Clear temporary data
-          document.getElementById("formSubmited").style.display = "none";
-          document.getElementById("admission").style.display = "block";
-          document.getElementById("warning").style.display = "block";
-          document.forms["admissionForm"].reset(); // Reset form
-        })
-        .catch(error => {
-          console.error('Error submitting form:', error);
-          alert('Failed to submit form: ' + error.message);
-        });
-    } else {
-      alert("No data to submit!");
-    }
+  // function submitForm() {
+  //   if (tempFormData) {
+  //     // Send POST request to /admission
+  //     fetch('/admission', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(tempFormData),
+  //     })
+  //       .then(response => {
+  //         if (!response.ok) {
+  //           throw new Error(`HTTP error! Status: ${response.status}`);
+  //         }
+  //         return response.text();
+  //       })
+  //       .then(data => {
+  //         alert(data); // Show server response (e.g., "Admission Taken")
+  //         tempFormData = null; // Clear temporary data
+  //         document.getElementById("formSubmited").style.display = "none";
+  //         document.getElementById("admission").style.display = "block";
+  //         document.getElementById("warning").style.display = "block";
+  //         document.forms["admissionForm"].reset(); // Reset form
+  //       })
+  //       .catch(error => {
+  //         console.error('Error submitting form:', error);
+  //         alert('Failed to submit form: ' + error.message);
+  //       });
+  //   } else {
+  //     alert("No data to submit!");
+  //   }
+  // }
+
+
+  // Function to parse URL parameters and populate the form
+function populateFormFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const classValue = urlParams.get('class');
+  const sectionValue = urlParams.get('section');
+
+  if (classValue) {
+    document.forms["admissionForm"]["class"].value = classValue;
   }
+  if (sectionValue) {
+    document.forms["admissionForm"]["section"].value = sectionValue;
+  }
+}
+
+// Run the function when the page loads
+window.onload = populateFormFromURL;
+
+// Update editForm and submitForm to re-populate URL values after reset
+function editForm() {
+  tempFormData = null;
+  document.getElementById("formSubmited").style.display = "none";
+  document.getElementById("admission").style.display = "block";
+  document.getElementById("warning").style.display = "block";
+  document.forms["admissionForm"].reset();
+  populateFormFromURL();
+}
+
+function submitForm() {
+  if (tempFormData) {
+    fetch('/admission', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(tempFormData),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+        tempFormData = null;
+        document.getElementById("formSubmited").style.display = "none";
+        document.getElementById("admission").style.display = "block";
+        document.getElementById("warning").style.display = "block";
+        document.forms["admissionForm"].reset();
+        populateFormFromURL();
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+        alert('Failed to submit form: ' + error.message);
+      });
+  } else {
+    alert("No data to submit!");
+  }
+}
+
 </script>
 
   </body>

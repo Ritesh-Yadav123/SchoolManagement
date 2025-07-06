@@ -123,13 +123,14 @@
   <h1>Class: <%= studentData.class %> | Section: <%= studentData.section %></h1>
 
   <div class="dropdown-container">
-    <select name="work" id="work">
-      <option>Admission</option>
-      <option>Notice</option>
-      <option>Students</option>
-      <option>Fee Management</option>
-      <option>Marksheet</option>
-      <option>ClassRoutine</option>
+    <select name="work" id="work" onchange="redirectTopage()">
+      <option value="">Select Option</option>
+      <option value="admission">Admission</option>
+      <option value="">Notice</option>
+      <option value="">Students</option>
+      <option value="">Fee Management</option>
+      <option value="">Marksheet</option>
+      <option value="">ClassRoutine</option>
     </select>
   </div>
 <script>
@@ -140,7 +141,18 @@
     document.getElementById('dev').style.opacity=0;
     setInterval(()=>{document.getElementById('dev').style.opacity=1},2000);
   },2000);
+</script>
+<script>
+  const classValue=new URLSearchParams(window.location.search).get("class");
+  const sectionValue=new URLSearchParams(window.location.search).get("section");
 
+  function redirectTopage(){
+    const sel=document.getElementById("work").value;
+    if(sel){
+      const url= `http://localhost:5000/${sel}?class=${classValue}&section=${sectionValue}`;
+      window.location.href=url;
+    }
+  }
 </script>
 </body>
 </html>

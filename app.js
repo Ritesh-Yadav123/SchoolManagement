@@ -24,9 +24,11 @@ app.use(express.json());
 const pathname = path.join(__dirname, "public");
 app.use(express.static(pathname));
 
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(pathname, "index.html"));
 });
+
 
 app.get("/admin", (req, res) => {
   res.sendFile(path.join(pathname, "adminLogin.html"));
@@ -72,6 +74,12 @@ app.use("/student", isAuthenticated, studentRoutes);
 
 app.use("/admission", isAuthenticated, admissionRoutes);
 
+
+// THERE IS LITTLE BIT ERROR HERE 
+
+// app.get('*', (req, res) => {
+//   res.status(404).send("❌ Route not found!");
+// });
 
 const PORT = 5000;
 app.listen(PORT, () => {
