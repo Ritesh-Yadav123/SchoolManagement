@@ -51,13 +51,10 @@ router.post('/', (req, res) => {
             return res.status(500).send('Something went wrong!');
         }
         console.log('Admission Form Submitted:', result);
-        res.send("Admission Taken");
+        res.send('Admission Taken Successfully');
     });
 });
 
-// Custom route for testing
-router.get("/ritesh", (req, res) => {
-    res.send("You are great Ritesh");
-});
+
 
 module.exports = router;

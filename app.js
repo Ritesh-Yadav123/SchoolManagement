@@ -3,6 +3,7 @@ const path = require("path");
 const db = require("./db");
 const studentRoutes = require("./student");
 const admissionRoutes=require("./admission");
+const studentNotice=require('./notice')
 const app = express();
 
 
@@ -73,6 +74,8 @@ function isAuthenticated(req, res, next) {
 app.use("/student", isAuthenticated, studentRoutes);
 
 app.use("/admission", isAuthenticated, admissionRoutes);
+
+app.use("/notice", isAuthenticated, studentNotice);
 
 
 // THERE IS LITTLE BIT ERROR HERE 
