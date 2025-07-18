@@ -121,49 +121,6 @@
     `;
   }
 
-  // function editForm() {
-  //   tempFormData = null; // Clear temporary data
-  //   document.getElementById("formSubmited").style.display = "none";
-  //   document.getElementById("admission").style.display = "block";
-  //   document.getElementById("warning").style.display = "block";
-  //   document.forms["admissionForm"].reset(); // Reset form fields
-  // }
-
-  // function submitForm() {
-  //   if (tempFormData) {
-  //     // Send POST request to /admission
-  //     fetch('/admission', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(tempFormData),
-  //     })
-  //       .then(response => {
-  //         if (!response.ok) {
-  //           throw new Error(`HTTP error! Status: ${response.status}`);
-  //         }
-  //         return response.text();
-  //       })
-  //       .then(data => {
-  //         alert(data); // Show server response (e.g., "Admission Taken")
-  //         tempFormData = null; // Clear temporary data
-  //         document.getElementById("formSubmited").style.display = "none";
-  //         document.getElementById("admission").style.display = "block";
-  //         document.getElementById("warning").style.display = "block";
-  //         document.forms["admissionForm"].reset(); // Reset form
-  //       })
-  //       .catch(error => {
-  //         console.error('Error submitting form:', error);
-  //         alert('Failed to submit form: ' + error.message);
-  //       });
-  //   } else {
-  //     alert("No data to submit!");
-  //   }
-  // }
-
-
-  // Function to parse URL parameters and populate the form
 function populateFormFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   const classValue = urlParams.get('class');
@@ -177,7 +134,6 @@ function populateFormFromURL() {
   }
 }
 
-// Run the function when the page loads
 window.onload = populateFormFromURL;
 
 // Update editForm and submitForm to re-populate URL values after reset
